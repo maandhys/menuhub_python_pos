@@ -1,0 +1,53 @@
+{% extends "application.html" %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_javascript jquery=1 %}
+
+{% block content %}
+
+<div >
+    <header class="border" style="
+    background: #337ab7;
+    color: #fff;
+    border-radius: 0 0 20px 20px;
+    width: 100%;
+    height: 100px;
+    font-size: 40px;
+    margin: 5px 0 20px 0;
+    box-shadow: 0px -5px 10px 0px rgba(0, 0, 50, 0.5);">
+    <p style="padding-top:20px"> Restaurante no MenuHub</p>
+    </header>
+    </div>
+    {% buttons %}
+    <div style="margin-left:15px">
+    <a href="{{ restaurant_id }}/new/">
+        <button class="btn btn-primary ">
+            {% bootstrap_icon "plus" %} Incluir
+        </button>
+    </a>
+    {% endbuttons %}
+    </div>
+
+    <h1>Reservas</h1>
+    {% if reserva_itens %}
+        {% for reserva_item in reserva_itens %}
+
+        <div style="width:150px" class="col-md-4">
+            <p  class="h4"><strong></strong></p>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-action active h4" ><a style="color: #fff;" >{{ reserva_item.restaurant.name }} </a></li>
+                <li class="list-group-item list-group-item-action" >Nome: {{ reserva_item.name }} </li>
+                <li class="list-group-item list-group-item-action" >Detalhes: {{ reserva_item.description }} </li>
+                <li class="list-group-item list-group-item-action" >Nº Pessoas: {{ reserva_item.qty }} </li>
+                <li class="list-group-item list-group-item-action" ><a href='{{ reserva_item.restaurant_id }}/delete/{{ reserva_item.id }}'>Delete</a></li>
+                <li class="list-group-item list-group-item-action" ><a href='{{ reserva_item.restaurant_id }}/edit/{{ reserva_item.id }}'>Edit </a></li>
+
+            </ul>
+        </div>
+          
+        {% endfor %}
+    {% else %}
+        <p>Nenhum item no menu, por favor inclua um.</p>
+    {% endif %}
+{% endblock content %}

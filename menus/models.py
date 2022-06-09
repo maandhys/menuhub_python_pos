@@ -26,3 +26,13 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return f"[MenuItem] description: {self.description[:50]}"
+
+
+class ReservaItem(models.Model):
+    name = models.CharField(max_length=45)
+    qty = models.CharField(max_length=45)
+    description = models.CharField(max_length=250)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"[ReservaItem] description: {self.description[:50]}"

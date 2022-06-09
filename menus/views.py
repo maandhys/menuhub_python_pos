@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from menus.models import MenuItem, Restaurant
+from menus.models import MenuItem, Restaurant, ReservaItem
 
 # Restaurant views.
 def show_restaurants(request):
@@ -89,3 +89,49 @@ def delete_menu_item(request, restaurant_id, item_id):
         return redirect(f"/menus/{restaurant_id}")
     else:
         return render(request, 'menus/delete_menu_item.html', {'menu_item': menu_item})
+
+
+#Reservas views
+def show_reserva_item(request, restaurant_id):
+    """"""
+    reserva_itens = ReservaItem.objects.order_by('name')
+    context = {'restaurant_id':restaurant_id, 'reserva_itens': reserva_itens}
+    return render(request, "reservas/show_reserva_item.html", context)
+
+
+def new_reserva_item(request, restaurant_id):
+    """criar uma nova reserva"""
+    if request.method == 'POST':
+        form_data = request.POST
+        reserva_itens = ReservaItem()
+        reserva_itens.name = form_data.get('name')
+        reserva_itens.qty = form_data.get('qty')
+        reserva_itens.description = form_data.get('description')
+        reserva_itens.restaurant_id = restaurant_id
+        reserva_itens.save()
+        return redirect(f"/reservas/{restaurant_id}")
+    else:
+        return render(request, 'reservas/new_reserva_item.html', {'restaurant_id': restaurant_id})
+
+
+def edit_reserva_item(request, restaurant_id, item_id):
+    """edit a menu item by a id."""
+    reserva_itens = ReservaItem.objects.get(pk=item_id)
+    if request.method == 'POST':
+        form_data = request.POST
+        reserva_itens.name = form_data.get('name')
+        reserva_itens.qty = form_data.get('qty')
+        reserva_itens.description = form_data.get('description')
+        reserva_itens.save()
+        return redirect(f"/reservas/{restaurant_id}")
+    else:
+        return render(request, 'reservas/edit_reserva_item.html', {'reserva_itens': reserva_itens})
+
+
+def delete_reserva_item(request, restaurant_id, item_id):
+    reserva_itens = ReservaItem.objects.get(pk=item_id)
+    if request.method == 'POST':
+        reserva_itens.delete()
+        return redirect(f"/reservas/{restaurant_id}")
+    else:
+        return render(request, 'reservas/delete_reserva_item.html', {'reserva_itens': reserva_itens})

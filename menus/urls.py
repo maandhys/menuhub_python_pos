@@ -13,4 +13,10 @@ urlpatterns = [
     path('menus/<int:restaurant_id>/new/', views.new_menu_item, name="new"),
     path('menus/<int:restaurant_id>/edit/<int:item_id>/', views.edit_menu_item, name="edit"),
     path('menus/<int:restaurant_id>/delete/<int:item_id>/', views.delete_menu_item, name="delete"),
+
+    #Novas Urls
+    path('reservas/<int:restaurant_id>', views.show_reserva_item, name="reserva"), 
+    path('reservas/<int:restaurant_id>/new/', views.new_reserva_item, name="new"),
+    path('reservas/<int:restaurant_id>/edit/<int:item_id>/', views.edit_reserva_item, name="edit"),
+    path('reservas/<int:restaurant_id>/delete/<int:item_id>/', views.delete_reserva_item, name="delete"),
 ]

@@ -1,0 +1,22 @@
+{% extends "application.html" %}
+
+{% block content %}
+<form action="" method="post">
+    <h1>Remove reserva {{ reserva_item.id }} </h1>
+    {% csrf_token %}
+    <fieldset>
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" value="{{ reserva_item.name }}"></input>
+
+        <label for="price">N de pessoas</label>
+        <input type="text" name="price" value="{{ reserva_item.qty }}"></input>
+
+
+        <label for="description">Detalhes:</label>
+        <input type="text" name="description" value="{{ reserva_item.description }}"></input>
+
+        <input type="submit" value="Confirmar" /> | <a href="/reservas/{{ reserva_item.restaurant_id }}">Cancelar</a>
+    </fieldset>
+</form>
+{% endblock content %}
